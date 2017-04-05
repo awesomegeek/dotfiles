@@ -1,0 +1,164 @@
+set encoding=utf-8
+autocmd! bufwritepost .vimrc source %
+set mouse=a
+
+set guifont=FuraMonoForPowerline\ Nerd\ Font\ Regular\ 10
+
+" Disable stupid backup and swap files - they trigger too many events
+" for file system watchers
+set nobackup
+set nowritebackup
+set noswapfile
+
+" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+call plug#begin('~/.vim/plugged')
+
+" Plug 'mhinz/vim-startify'
+
+Plug 'junegunn/vim-easy-align'
+
+" Snippets
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" NERDTree On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'jistr/vim-nerdtree-tabs'
+
+" Using a non-master branch
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+
+" Git
+" ===
+Plug 'tpope/vim-fugitive'
+
+" Full path fuzzy file, buffer, mru, tag, ... finder
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Nerdtree-syntax-highlight
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+"Color schreme kalisi
+Plug 'https://github.com/freeo/vim-kalisi'
+
+" Vim airline
+Plug 'vim-airline/vim-airline'
+
+" Devicons
+Plug 'ryanoasis/vim-webdevicons'
+
+" PEP8
+Plug 'nvie/vim-flake8'
+
+" TypeScript support
+" ==================
+
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Autocomplete and more
+Plug 'https://github.com/Quramy/tsuquyomi'
+
+" Typescript syntex highlight
+Plug 'leafgarland/typescript-vim' | Plug 'Quramy/vim-js-pretty-template'
+Plug 'jason0x43/vim-js-indent'
+
+" Ionic 2 systex highlight
+Plug 'akz92/vim-ionic2'
+
+" Provides completion and semantic error checking for Angular Components' template. 
+Plug 'Quramy/ng-tsserver'
+
+
+" Initialize plugin system
+call plug#end()
+
+let mapleader=" "
+
+silent! colo kalisi
+set background=dark
+
+set nu " Turn on line numbering
+
+set clipboard=unnamed
+
+let g:airline_powerline_fonts = 1
+set laststatus=2 " without this airline display only NERDTree is on
+
+"Open NERDTree when vim open
+"autocmd vimenter * NERDTree
+
+"Map ctrl + N to toggle NERDTree
+"map <C-n> :NERDTreeToggle<CR>
+noremap <leader>n :NERDTreeToggle<cr>
+
+"Auto load NERDTree when vim start with no file name given
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"nerd tree and startify
+"autocmd VimEnter *
+"	\   if !argc()
+"	\ |   Startify
+"	\ |   NERDTree
+"	\ |   wincmd w
+"	\ | endif
+
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+
+let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
+
+" Nerd Tree Colors
+let s:brown = "905532"
+let s:aqua =  "3AFFDB"
+let s:blue = "689FB6"
+let s:darkBlue = "44788E"
+let s:purple = "834F79"
+let s:lightPurple = "834F79"
+let s:red = "AE403F"
+let s:beige = "F5C06F"
+let s:yellow = "F09F17"
+let s:orange = "D4843E"
+let s:darkOrange = "F16529"
+let s:pink = "CB6F6F"
+let s:salmon = "EE6E73"
+let s:green = "8FAA54"
+let s:lightGreen = "31B53E"
+let s:white = "FFFFFF"
+let s:rspec_red = 'FE405F'
+let s:git_orange = 'F54D27'
+
+" Navigate around split windows
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+set history=700
+set undolevels=700
+
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set shiftround
+set expandtab
+
+" CtrlP settings
+" ==============
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+" switch buffer without saving
+set hidden
+" make buffer modifiable
+set modifiable
