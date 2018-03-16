@@ -1,164 +1,171 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+
+" ------Plugins-------
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-surround'
+Plugin 'gcmt/breeze.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'nvie/vim-flake8'
+
+" Color Themes
+Plugin 'colors'
+
+call vundle#end()
+colorscheme seoul256
+filetype plugin indent on
+
+""""""""
+if has('autocmd')
+  filetype plugin indent on
+endif
+if has('syntax') && !exists('g:syntax_on')
+  syntax enable
+endif
+
+" Use :help 'option' to see the documentation for the given option.
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set showmatch
+set showmode
+set smarttab
+
+set nrformats-=octal
+set shiftround
+
+set ttimeout
+set ttimeoutlen=50
+
+set incsearch
+" Use <C-L> to clear the highlighting of :set hlsearch.
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+endif
+
+set laststatus=2
+set ruler
+set showcmd
+set wildmenu
+
+set autoread
+
 set encoding=utf-8
-autocmd! bufwritepost .vimrc source %
-set mouse=a
+set tabstop=2 shiftwidth=2 expandtab
+set listchars=tab:▒░,trail:▓
+set list
 
-set guifont=FuraMonoForPowerline\ Nerd\ Font\ Regular\ 10
+inoremap <C-U> <C-G>u<C-U>
 
-" Disable stupid backup and swap files - they trigger too many events
-" for file system watchers
+set number
+set hlsearch
+set ignorecase
+set smartcase
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+  set mouse=a
+endif
+
+" do not history when leavy buffer
+set hidden
+
+" FIXME: (broken) ctrl s to save
+noremap  <C-S> :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
+inoremap <C-S> <Esc>:update<CR>
+
 set nobackup
 set nowritebackup
 set noswapfile
+set fileformats=unix,dos,mac
 
-" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
-call plug#begin('~/.vim/plugged')
+" exit insert mode
+inoremap <C-c> <Esc>
 
-" Plug 'mhinz/vim-startify'
+set completeopt=menuone,longest,preview
 
-Plug 'junegunn/vim-easy-align'
+"
+" Plugins config
+"
 
-" Snippets
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" NERDTree
+nnoremap <S-n> :NERDTreeToggle<CR>
 
-" NERDTree On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'jistr/vim-nerdtree-tabs'
+" CtrlP
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/node_modules/*
 
-" Using a non-master branch
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+" Ultisnip
+" NOTE: <f1> otherwise it overrides <tab> forever
+let g:UltiSnipsExpandTrigger="<f1>"
+let g:UltiSnipsJumpForwardTrigger="<f1>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:did_UltiSnips_vim_after = 1
 
-" Plugin outside ~/.vim/plugged with post-update hook
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'junegunn/fzf.vim'
-
-" Git
-" ===
-Plug 'tpope/vim-fugitive'
-
-" Full path fuzzy file, buffer, mru, tag, ... finder
-Plug 'ctrlpvim/ctrlp.vim'
-
-" Nerdtree-syntax-highlight
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-"Color schreme kalisi
-Plug 'https://github.com/freeo/vim-kalisi'
-
-" Vim airline
-Plug 'vim-airline/vim-airline'
-
-" Devicons
-Plug 'ryanoasis/vim-webdevicons'
-
-" PEP8
-Plug 'nvie/vim-flake8'
-
-" TypeScript support
-" ==================
-
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-" Autocomplete and more
-Plug 'https://github.com/Quramy/tsuquyomi'
-
-" Typescript syntex highlight
-Plug 'leafgarland/typescript-vim' | Plug 'Quramy/vim-js-pretty-template'
-Plug 'jason0x43/vim-js-indent'
-
-" Ionic 2 systex highlight
-Plug 'akz92/vim-ionic2'
-
-" Provides completion and semantic error checking for Angular Components' template. 
-Plug 'Quramy/ng-tsserver'
-
-
-" Initialize plugin system
-call plug#end()
-
-let mapleader=" "
-
-silent! colo kalisi
-set background=dark
-
-set nu " Turn on line numbering
-
-set clipboard=unnamed
-
+" vim-airline
+let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-set laststatus=2 " without this airline display only NERDTree is on
 
-"Open NERDTree when vim open
-"autocmd vimenter * NERDTree
+"
+" Basic shortcuts definitions
+"  most in visual mode / selection (v or ⇧ v)
+"
 
-"Map ctrl + N to toggle NERDTree
-"map <C-n> :NERDTreeToggle<CR>
-noremap <leader>n :NERDTreeToggle<cr>
+" Find
+map <C-f> /
+" indent / deindent after selecting the text with (⇧ v), (.) to repeat.
+vnoremap <Tab> >
+vnoremap <S-Tab> <
+" comment / decomment & normal comment behavior
+vmap <C-m> gc
+" Disable tComment to escape some entities
+let g:tcomment#replacements_xml={}
+" Text wrap simpler, then type the open tag or ',"
+vmap <C-w> S
+" Cut, Paste, Copy
+vmap <C-x> d
+vmap <C-v> p
+vmap <C-c> y
+" Undo, Redo (broken)
+nnoremap <C-z>  :undo<CR>
+inoremap <C-z>  <Esc>:undo<CR>
+nnoremap <C-y>  :redo<CR>
+inoremap <C-y>  <Esc>:redo<CR>
+" Tabs
+let g:airline_theme='luna'
+let g:airline#extensions#tabline#enabled = 1
+nnoremap <C-b>  :tabprevious<CR>
+inoremap <C-b>  <Esc>:tabprevious<CR>i
+nnoremap <C-n>  :tabnext<CR>
+inoremap <C-n>  <Esc>:tabnext<CR>i
+nnoremap <C-t>  :tabnew<CR>
+inoremap <C-t>  <Esc>:tabnew<CR>i
+nnoremap <C-k>  :tabclose<CR>
+inoremap <C-k>  <Esc>:tabclose<CR>i
 
-"Auto load NERDTree when vim start with no file name given
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" lazy ':'
+map \ :
 
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let mapleader = ','
+nnoremap <Leader>p :set paste<CR>
+nnoremap <Leader>o :set nopaste<CR>
+noremap  <Leader>g :GitGutterToggle<CR>
 
-"nerd tree and startify
-"autocmd VimEnter *
-"	\   if !argc()
-"	\ |   Startify
-"	\ |   NERDTree
-"	\ |   wincmd w
-"	\ | endif
-
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-
-let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
-let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
-
-" Nerd Tree Colors
-let s:brown = "905532"
-let s:aqua =  "3AFFDB"
-let s:blue = "689FB6"
-let s:darkBlue = "44788E"
-let s:purple = "834F79"
-let s:lightPurple = "834F79"
-let s:red = "AE403F"
-let s:beige = "F5C06F"
-let s:yellow = "F09F17"
-let s:orange = "D4843E"
-let s:darkOrange = "F16529"
-let s:pink = "CB6F6F"
-let s:salmon = "EE6E73"
-let s:green = "8FAA54"
-let s:lightGreen = "31B53E"
-let s:white = "FFFFFF"
-let s:rspec_red = 'FE405F'
-let s:git_orange = 'F54D27'
-
-" Navigate around split windows
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-set history=700
-set undolevels=700
-
-
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set shiftround
-set expandtab
-
-" CtrlP settings
-" ==============
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-
-" switch buffer without saving
-set hidden
-" make buffer modifiable
-set modifiable
+" this machine config
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
