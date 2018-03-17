@@ -18,6 +18,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'nvie/vim-flake8'
+Plugin 'ryanoasis/vim-devicons'
 
 " Color Themes
 Plugin 'colors'
