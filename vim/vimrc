@@ -18,13 +18,27 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'nvie/vim-flake8'
+Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'Yggdroot/indentLine'
+Plugin 'ayu-theme/ayu-vim'
 
 " Color Themes
 Plugin 'colors'
 
 call vundle#end()
-colorscheme seoul256
+
+set termguicolors 
+let ayucolor="dark"
+colorscheme ayu
+
+" IndentLine {{
+let g:indentLine_char = '┆'
+let g:indentLine_first_char = '┆'
+let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_setColors = 0
+" }}
+
 filetype plugin indent on
 
 """"""""
@@ -85,10 +99,10 @@ endif
 " do not history when leavy buffer
 set hidden
 
-" FIXME: (broken) ctrl s to save
-noremap  <C-S> :update<CR>
-vnoremap <C-S> <C-C>:update<CR>
-inoremap <C-S> <Esc>:update<CR>
+" " FIXME: (broken) ctrl s to save
+" noremap  <C-S> :update<CR>
+" vnoremap <C-S> <C-C>:update<CR>
+" inoremap <C-S> <Esc>:update<CR>
 
 set nobackup
 set nowritebackup
@@ -106,9 +120,13 @@ set completeopt=menuone,longest,preview
 
 " NERDTree
 nnoremap <S-n> :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$']
 
 " CtrlP
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/node_modules/*
+let g:ctrlp_custom_ignore={
+  \ 'file': '\v\.(pyc|exe|so|dll|class|png|jpg|jpeg)$',
+ \}
 
 " Ultisnip
 " NOTE: <f1> otherwise it overrides <tab> forever
@@ -155,16 +173,49 @@ nnoremap <C-n>  :tabnext<CR>
 inoremap <C-n>  <Esc>:tabnext<CR>i
 nnoremap <C-t>  :tabnew<CR>
 inoremap <C-t>  <Esc>:tabnew<CR>i
-nnoremap <C-k>  :tabclose<CR>
-inoremap <C-k>  <Esc>:tabclose<CR>i
+" nnoremap <C-k>  :tabclose<CR>
+" inoremap <C-k>  <Esc>:tabclose<CR>i
 
 " lazy ':'
 map \ :
 
-let mapleader = ','
+let mapleader = "\<Space>"
 nnoremap <Leader>p :set paste<CR>
 nnoremap <Leader>o :set nopaste<CR>
 noremap  <Leader>g :GitGutterToggle<CR>
+
+" Buffer management
+nmap <Leader>bb :CtrlPBuffer<CR>
+nmap <Leader>bm :CtrlPMixed<CR>
+nmap <Leader>bs :CtrlPMRU<CR>
+
+" Use the right side of the screen
+let g:buffergator_viewport_split_policy = 'R'
+
+" I want my own keymappings...
+let g:buffergator_suppress_keymaps = 1
+
+" Looper buffers
+"let g:buffergator_mru_cycle_loop = 1
+" Go to the previous buffer open
+nmap <leader>jj :BuffergatorMruCyclePrev<cr> 
+" Go to the next buffer open
+nmap <leader>kk :BuffergatorMruCycleNext<cr>
+
+" View the entire list of buffers open
+nmap <leader>bl :BuffergatorOpen<cr>
+
+" Shared bindings from Solution #1 from earlier
+nmap <leader>T :enew<cr>
+nmap <leader>bq :bp <BAR> bd #<cr>
+
+" Easy window switching
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
+nmap <silent> <C-h> :wincmd h<CR>
+nmap <silent> <C-l> :wincmd l<CR>
 
 " this machine config
 if filereadable(expand("~/.vimrc.local"))
