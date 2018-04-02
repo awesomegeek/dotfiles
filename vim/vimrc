@@ -1,4 +1,5 @@
 set nocompatible
+set term=screen-256color
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -21,22 +22,23 @@ Plugin 'nvie/vim-flake8'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'Yggdroot/indentLine'
-Plugin 'ayu-theme/ayu-vim'
+" Plugin 'ayu-theme/ayu-vim'
+Plugin 'KeitaNakamura/neodark.vim'
 
 " Color Themes
 Plugin 'colors'
 
 call vundle#end()
 
-set termguicolors 
-let ayucolor="dark"
-colorscheme ayu
+" set termguicolors
+" let ayucolor="mirage"
+colorscheme neodark
 
 " IndentLine {{
 let g:indentLine_char = '┆'
 let g:indentLine_first_char = '┆'
 let g:indentLine_showFirstIndentLevel = 1
-let g:indentLine_setColors = 0
+let g:indentLine_setColors = 1
 " }}
 
 filetype plugin indent on
@@ -165,7 +167,7 @@ inoremap <C-z>  <Esc>:undo<CR>
 nnoremap <C-y>  :redo<CR>
 inoremap <C-y>  <Esc>:redo<CR>
 " Tabs
-let g:airline_theme='ayu'
+let g:airline_theme='neodark'
 let g:airline#extensions#tabline#enabled = 1
 nnoremap <C-b>  :tabprevious<CR>
 inoremap <C-b>  <Esc>:tabprevious<CR>i
@@ -198,7 +200,7 @@ let g:buffergator_suppress_keymaps = 1
 " Looper buffers
 "let g:buffergator_mru_cycle_loop = 1
 " Go to the previous buffer open
-nmap <leader>jj :BuffergatorMruCyclePrev<cr> 
+nmap <leader>jj :BuffergatorMruCyclePrev<cr>
 " Go to the next buffer open
 nmap <leader>kk :BuffergatorMruCycleNext<cr>
 
@@ -223,3 +225,4 @@ if filereadable(expand("~/.vimrc.local"))
 endif
 
 autocmd! bufwritepost .vimrc source %
+set nowrap
