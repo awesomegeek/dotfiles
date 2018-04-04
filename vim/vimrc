@@ -22,6 +22,11 @@ Plugin 'nvie/vim-flake8'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'Yggdroot/indentLine'
+" For HTML {{
+Plugin 'valloric/matchtagalways'
+Plugin 'mattn/emmet-vim'
+" }}
+" Themes
 " Plugin 'ayu-theme/ayu-vim'
 Plugin 'KeitaNakamura/neodark.vim'
 
@@ -36,9 +41,15 @@ colorscheme neodark
 
 " IndentLine {{
 let g:indentLine_char = '┆'
-let g:indentLine_first_char = '┆'
+let g:indentLine_first_char = '.'
 let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_setColors = 1
+
+" Vim
+let g:indentLine_color_term = 239
+
+" GVim
+let g:indentLine_color_gui = '#A4E57E'
 " }}
 
 filetype plugin indent on
