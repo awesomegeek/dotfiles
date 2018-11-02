@@ -26,9 +26,15 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'valloric/matchtagalways'
 Plugin 'mattn/emmet-vim'
 " }}
+
+" React Native {{
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+" }}
+
 " Themes
-" Plugin 'ayu-theme/ayu-vim'
 Plugin 'KeitaNakamura/neodark.vim'
+Plugin 'danilo-augusto/vim-afterglow'
 
 " Color Themes
 Plugin 'colors'
@@ -38,6 +44,7 @@ call vundle#end()
 " set termguicolors
 " let ayucolor="mirage"
 colorscheme neodark
+" colorscheme afterglow
 
 " IndentLine {{
 let g:indentLine_char = '┆'
@@ -180,12 +187,12 @@ inoremap <C-y>  <Esc>:redo<CR>
 " Tabs
 let g:airline_theme='neodark'
 let g:airline#extensions#tabline#enabled = 1
-nnoremap <C-b>  :tabprevious<CR>
-inoremap <C-b>  <Esc>:tabprevious<CR>i
-nnoremap <C-n>  :tabnext<CR>
-inoremap <C-n>  <Esc>:tabnext<CR>i
-nnoremap <C-t>  :tabnew<CR>
-inoremap <C-t>  <Esc>:tabnew<CR>i
+" nnoremap <C-b>  :tabprevious<CR>
+" inoremap <C-b>  <Esc>:tabprevious<CR>i
+" nnoremap <C-n>  :tabnext<CR>
+" inoremap <C-n>  <Esc>:tabnext<CR>i
+" nnoremap <C-t>  :tabnew<CR>
+" inoremap <C-t>  <Esc>:tabnew<CR>i
 " nnoremap <C-k>  :tabclose<CR>
 " inoremap <C-k>  <Esc>:tabclose<CR>i
 
@@ -201,6 +208,11 @@ noremap  <Leader>g :GitGutterToggle<CR>
 nmap <Leader>bb :CtrlPBuffer<CR>
 nmap <Leader>bm :CtrlPMixed<CR>
 nmap <Leader>bs :CtrlPMRU<CR>
+
+nnoremap <silent> <C-b> :BuffergatorMruCyclePrev<CR>
+inoremap <silent> <C-b> <Esc>::BuffergatorMruCyclePrev<CR>
+nnoremap <silent> <C-n> :BuffergatorMruCycleNext<CR>
+inoremap <silent> <C-n> <Esc>:BuffergatorMruCycleNext<CR>
 
 " Use the right side of the screen
 let g:buffergator_viewport_split_policy = 'R'
