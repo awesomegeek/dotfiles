@@ -1,50 +1,59 @@
 set nocompatible
 set term=screen-256color
-filetype off
+" filetype off
+filetype plugin on
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
+call plug#begin('~/.vim/plugged')
 " ------Plugins-------
-Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-surround'
-Plugin 'gcmt/breeze.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'Yggdroot/indentLine'
+Plug'mhinz/vim-startify'
+Plug'scrooloose/nerdtree'
+Plug 'tpope/vim-surround'
+Plug 'gcmt/breeze.vim'
+Plug 'kien/ctrlp.vim'
+" Plug 'SirVer/ultisnips'
+" Linting
+" Plug 'w0rp/ale'
+Plug 'Valloric/YouCompleteMe'
+Plug 'davidhalter/jedi-vim'
+" Python
+Plug 'nvie/vim-flake8'
+Plug 'jmcantrell/vim-virtualenv'
+
 " For HTML {{
-Plugin 'valloric/matchtagalways'
-Plugin 'mattn/emmet-vim'
+Plug 'valloric/matchtagalways'
+Plug 'mattn/emmet-vim'
 " }}
 
-" React Native {{
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-" }}
+" Visual and useability
+Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'airblade/vim-gitgutter'
+Plug 'Yggdroot/indentLine'
+Plug 'tomtom/tcomment_vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'KeitaNakamura/neodark.vim'
+Plug 'scrooloose/nerdcommenter'
+call plug#end()
 
-" Themes
-Plugin 'KeitaNakamura/neodark.vim'
-Plugin 'danilo-augusto/vim-afterglow'
-
-" Color Themes
-Plugin 'colors'
-
-call vundle#end()
+" Clipboard (For Mac)
+set clipboard=unnamed
 
 " set termguicolors
-" let ayucolor="mirage"
 colorscheme neodark
 " colorscheme afterglow
+
+" let g:ale_linters = {
+" \   'javascript': ['eslint'],
+" \   'pythoon' : ['flake8'],
+" \}
 
 " IndentLine {{
 let g:indentLine_char = '┆'
@@ -70,7 +79,7 @@ if has('syntax') && !exists('g:syntax_on')
 endif
 
 " Use :help 'option' to see the documentation for the given option.
-set autoindent
+" set autoindent
 set backspace=indent,eol,start
 set complete-=i
 set showmatch
@@ -130,7 +139,7 @@ set noswapfile
 set fileformats=unix,dos,mac
 
 " exit insert mode
-inoremap <C-c> <Esc>
+" inoremap <C-c> <Esc>
 
 set completeopt=menuone,longest,preview
 
@@ -150,51 +159,26 @@ let g:ctrlp_custom_ignore={
 
 " Ultisnip
 " NOTE: <f1> otherwise it overrides <tab> forever
-let g:UltiSnipsExpandTrigger="<f1>"
-let g:UltiSnipsJumpForwardTrigger="<f1>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:did_UltiSnips_vim_after = 1
+" let g:UltiSnipsExpandTrigger="<f1>"
+" let g:UltiSnipsJumpForwardTrigger="<f1>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:did_UltiSnips_vim_after = 1
 
 " vim-airline
-let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-"
-" Basic shortcuts definitions
-"  most in visual mode / selection (v or ⇧ v)
-"
-
-" Find
-map <C-f> /
 " indent / deindent after selecting the text with (⇧ v), (.) to repeat.
-vnoremap <Tab> >
-vnoremap <S-Tab> <
-" comment / decomment & normal comment behavior
-vmap <C-m> gc
-" Disable tComment to escape some entities
 let g:tcomment#replacements_xml={}
-" Text wrap simpler, then type the open tag or ',"
-vmap <C-w> S
-" Cut, Paste, Copy
-vmap <C-x> d
-vmap <C-v> p
-vmap <C-c> y
-" Undo, Redo (broken)
-nnoremap <C-z>  :undo<CR>
-inoremap <C-z>  <Esc>:undo<CR>
-nnoremap <C-y>  :redo<CR>
-inoremap <C-y>  <Esc>:redo<CR>
-" Tabs
 let g:airline_theme='neodark'
-let g:airline#extensions#tabline#enabled = 1
-" nnoremap <C-b>  :tabprevious<CR>
-" inoremap <C-b>  <Esc>:tabprevious<CR>i
-" nnoremap <C-n>  :tabnext<CR>
-" inoremap <C-n>  <Esc>:tabnext<CR>i
-" nnoremap <C-t>  :tabnew<CR>
-" inoremap <C-t>  <Esc>:tabnew<CR>i
-" nnoremap <C-k>  :tabclose<CR>
-" inoremap <C-k>  <Esc>:tabclose<CR>i
+let g:airline#extensions#tabline#enabled = 0
+
+" Ctrl Space config
+set showtabline=0
+set nocompatible
+set hidden
+if executable("ag")
+  let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+endif
 
 " lazy ':'
 map \ :
@@ -234,18 +218,12 @@ nmap <leader>bl :BuffergatorOpen<cr>
 nmap <leader>T :enew<cr>
 nmap <leader>bq :bp <BAR> bd #<cr>
 
-" Easy window switching
-nmap <silent> <A-Up> :wincmd k<CR>
-nmap <silent> <A-Down> :wincmd j<CR>
-nmap <silent> <A-Left> :wincmd h<CR>
-nmap <silent> <A-Right> :wincmd l<CR>
-nmap <silent> <C-h> :wincmd h<CR>
-nmap <silent> <C-l> :wincmd l<CR>
-
 " this machine config
 if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
+  source ~/.vimrc
 endif
 
 autocmd! bufwritepost .vimrc source %
-set nowrap
+autocmd BufWritePre *.py :%s/\s\+$//e
+inoremap jk <Esc>
+" set nowrap
