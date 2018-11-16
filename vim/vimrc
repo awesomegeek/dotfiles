@@ -128,18 +128,10 @@ endif
 " do not history when leavy buffer
 set hidden
 
-" " FIXME: (broken) ctrl s to save
-" noremap  <C-S> :update<CR>
-" vnoremap <C-S> <C-C>:update<CR>
-" inoremap <C-S> <Esc>:update<CR>
-
 set nobackup
 set nowritebackup
 set noswapfile
 set fileformats=unix,dos,mac
-
-" exit insert mode
-" inoremap <C-c> <Esc>
 
 set completeopt=menuone,longest,preview
 
@@ -224,6 +216,13 @@ if filereadable(expand("~/.vimrc.local"))
 endif
 
 autocmd! bufwritepost .vimrc source %
-autocmd BufWritePre *.py :%s/\s\+$//e
+
+" Removes trailing spaces
+function TrimWhiteSpace()
+  %s/\s*$//
+  ''
+endfunction
+
+autocmd BufWritePre * call TrimWhiteSpace()
 inoremap jk <Esc>
 " set nowrap
