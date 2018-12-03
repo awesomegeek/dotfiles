@@ -33,6 +33,7 @@ Plug 'mattn/emmet-vim'
 " Visual and useability
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'jeetsukumaran/vim-buffergator'
+Plug 'bling/vim-bufferline'
 Plug 'airblade/vim-gitgutter'
 Plug 'Yggdroot/indentLine'
 Plug 'tomtom/tcomment_vim'
@@ -162,7 +163,11 @@ let g:airline_powerline_fonts = 1
 " indent / deindent after selecting the text with (⇧ v), (.) to repeat.
 let g:tcomment#replacements_xml={}
 let g:airline_theme='neodark'
-let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#exclude_preview = 1
+
 
 " Ctrl Space config
 set showtabline=0
@@ -189,6 +194,10 @@ nnoremap <silent> <C-b> :BuffergatorMruCyclePrev<CR>
 inoremap <silent> <C-b> <Esc>::BuffergatorMruCyclePrev<CR>
 nnoremap <silent> <C-n> :BuffergatorMruCycleNext<CR>
 inoremap <silent> <C-n> <Esc>:BuffergatorMruCycleNext<CR>
+
+nnoremap <silent> <C-w> :bd<CR>
+inoremap <silent> <C-w> <Esc>:bd<CR>
+
 
 " Use the right side of the screen
 let g:buffergator_viewport_split_policy = 'R'
@@ -218,11 +227,11 @@ endif
 autocmd! bufwritepost .vimrc source %
 
 " Removes trailing spaces
-function TrimWhiteSpace()
-  %s/\s*$//
-  ''
-endfunction
+" function TrimWhiteSpace()
+"  %s/\s*$//
+"  ''
+"endfunction
 
-autocmd BufWritePre * call TrimWhiteSpace()
+" autocmd BufWritePre * call TrimWhiteSpace()
 inoremap jk <Esc>
 " set nowrap
