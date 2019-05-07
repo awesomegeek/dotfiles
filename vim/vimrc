@@ -16,7 +16,7 @@ Plug'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'gcmt/breeze.vim'
 Plug 'kien/ctrlp.vim'
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " Linting
 " Plug 'w0rp/ale'
 Plug 'Valloric/YouCompleteMe'
@@ -42,6 +42,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'scrooloose/nerdcommenter'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'bronson/vim-trailing-whitespace'
 call plug#end()
 
 " Clipboard (For Mac)
@@ -107,7 +109,7 @@ set wildmenu
 set autoread
 
 set encoding=utf-8
-set tabstop=2 shiftwidth=2 expandtab
+set tabstop=4 shiftwidth=4 expandtab
 set listchars=tab:▒░,trail:▓
 set list
 
@@ -163,9 +165,9 @@ let g:airline_powerline_fonts = 1
 " indent / deindent after selecting the text with (⇧ v), (.) to repeat.
 let g:tcomment#replacements_xml={}
 let g:airline_theme='neodark'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#show_tabs = 0
-let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#tabline#exclude_preview = 1
 
 
@@ -219,19 +221,24 @@ nmap <leader>bl :BuffergatorOpen<cr>
 nmap <leader>T :enew<cr>
 nmap <leader>bq :bp <BAR> bd #<cr>
 
+nmap <leader>w :FixWhitespace<cr>
 " this machine config
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc
 endif
 
 autocmd! bufwritepost .vimrc source %
-
+autocmd BufWritePost *.py call Flake8()
 " Removes trailing spaces
-" function TrimWhiteSpace()
-"  %s/\s*$//
-"  ''
+"function TrimWhiteSpace()
+   "%s/\s*$//
+   "''
 "endfunction
 
-" autocmd BufWritePre * call TrimWhiteSpace()
+autocmd BufWritePre *.py :FixWhitespace
 inoremap jk <Esc>
+
+" Load .ycm_extra_conf.py
+let g:ycm_confirm_extra_conf = 0
+
 " set nowrap
