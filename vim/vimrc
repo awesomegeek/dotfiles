@@ -11,7 +11,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 " ------Plugins-------
-Plug'mhinz/vim-startify'
+" Plug'mhinz/vim-startify'
 Plug'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'gcmt/breeze.vim'
@@ -40,7 +40,10 @@ Plug 'tomtom/tcomment_vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
+
+" Themes
 Plug 'KeitaNakamura/neodark.vim'
+
 Plug 'scrooloose/nerdcommenter'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'bronson/vim-trailing-whitespace'
@@ -51,7 +54,6 @@ set clipboard=unnamed
 
 " set termguicolors
 colorscheme neodark
-" colorscheme afterglow
 
 " let g:ale_linters = {
 " \   'javascript': ['eslint'],
@@ -220,6 +222,11 @@ nmap <leader>bl :BuffergatorOpen<cr>
 " Shared bindings from Solution #1 from earlier
 nmap <leader>T :enew<cr>
 nmap <leader>bq :bp <BAR> bd #<cr>
+
+" -- EMMET CONFIG --
+" Redefine trigger key
+let g:user_emmet_leader_key=','
+" -- --
 
 nmap <leader>w :FixWhitespace<cr>
 " this machine config
